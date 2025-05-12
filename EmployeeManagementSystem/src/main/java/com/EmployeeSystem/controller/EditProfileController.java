@@ -10,9 +10,8 @@ import java.io.IOException;
 
 @WebServlet("/editprofile")
 public class EditProfileController extends HttpServlet {
-	
-	private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
     private final ProfileService profileService = new ProfileService();
 
     @Override
@@ -20,6 +19,7 @@ public class EditProfileController extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
+
         if (session == null || session.getAttribute("empid") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
@@ -55,9 +55,12 @@ public class EditProfileController extends HttpServlet {
         boolean success = profileService.updateEmployeeProfile(empId, fullName, age, contact);
 
         if (success) {
-            session.setAttribute("fullName", fullName);
+            session.setAttribute("fullName", fullName); // Update session with new full name
+            session.setAttribute("successMessage", "Profile updated successfully!");
+            response.sendRedirect(request.getContextPath() + "/profile"); // Redirect to profile page
+        } else {
+            request.setAttribute("errorMessage", "Failed to update profile.");
+            request.getRequestDispatcher("/WEB-INF/pages/EditProfile.jsp").forward(request, response);
         }
-
-        response.sendRedirect(request.getContextPath() + "/profile");
     }
 }

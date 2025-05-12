@@ -16,7 +16,7 @@
                 <p class="subtitle">Efficient employee management for modern businesses</p>
                 <div class="cta-buttons">
                     <a href="${pageContext.request.contextPath}/login" class="btn btn-primary">Get Started</a>
-                    <a href="${pageContext.request.contextPath}/features" class="btn btn-outline">Learn More</a>
+                    <a href="${pageContext.request.contextPath}/aboutus" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
             <div class="hero-image">

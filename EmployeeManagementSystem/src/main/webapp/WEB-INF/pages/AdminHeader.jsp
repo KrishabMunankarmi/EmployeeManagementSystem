@@ -23,7 +23,13 @@
                 <span>System</span>
             </div>
         </div>
-        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+                <li><a href="${pageContext.request.contextPath}/adminemployee">Employees</a></li>
+                <li><a href="${pageContext.request.contextPath}/admindepartment">Departments</a></li>
+            </ul>
+        </nav>
         <div class="user-actions">
             <span class="welcome-msg">
                 Welcome, ${sessionScope.fullName != null ? sessionScope.fullName : 'User'}

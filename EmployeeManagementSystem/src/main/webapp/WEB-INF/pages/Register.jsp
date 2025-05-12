@@ -22,8 +22,8 @@
             }
 
             const age = parseInt(document.getElementById('age').value);
-            if (age < 18 || age > 100) {
-                alert('Age must be between 18 and 100!');
+            if (age < 18 || age > 90) {
+                alert('Age must be between 18 and 90!');
                 return false;
             }
 

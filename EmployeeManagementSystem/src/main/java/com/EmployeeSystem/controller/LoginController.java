@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
 
             if (rs.next()) {
                 String storedHash = rs.getString("Password");
-                
+
                 if (PasswordUtil.verifyPassword(password, storedHash)) {
                     HttpSession session = request.getSession();
                     session.setAttribute("empid", rs.getInt("EmpID"));

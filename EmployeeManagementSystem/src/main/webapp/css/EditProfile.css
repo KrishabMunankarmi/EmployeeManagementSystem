@@ -30,10 +30,6 @@
     background: linear-gradient(90deg, #3498db, #2ecc71);
 }
 
-.change-password-form {
-    margin-top: 2rem;
-}
-
 .form-group {
     margin-bottom: 1.8rem;
     position: relative;
@@ -48,7 +44,7 @@
 }
 
 .form-group input {
-    width: 100%;
+    width: 90%;
     padding: 0.85rem 1rem;
     border: 1px solid #e0e6ed;
     border-radius: 8px;
@@ -62,20 +58,6 @@
     outline: none;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
     background-color: #fff;
-}
-
-.password-strength {
-    margin-top: 0.5rem;
-    height: 6px;
-    background: #f0f2f5;
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.password-strength-bar {
-    height: 100%;
-    width: 0;
-    transition: width 0.4s ease, background 0.4s ease;
 }
 
 .form-actions {
@@ -125,7 +107,7 @@
     color: #2c3e50;
 }
 
-.error-message {
+.error {
     color: #e74c3c;
     padding: 0.85rem 1rem;
     margin: 1.5rem 0;
@@ -136,7 +118,7 @@
     animation: fadeIn 0.3s ease;
 }
 
-.success-message {
+.success {
     color: #27ae60;
     padding: 0.85rem 1rem;
     margin: 1.5rem 0;
@@ -158,11 +140,11 @@
         margin: 1rem;
         border-radius: 10px;
     }
-    
+
     .form-actions {
         flex-direction: column;
     }
-    
+
     .save-btn, .cancel-btn {
         width: 100%;
     }

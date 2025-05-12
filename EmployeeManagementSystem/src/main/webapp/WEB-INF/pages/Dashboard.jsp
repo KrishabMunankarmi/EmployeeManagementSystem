@@ -24,9 +24,6 @@
     <main class="dashboard-container">
         <div class="dashboard-header">
             <h1> Admin Dashboard</h1>
-            <div class="dashboard-actions">
-                <a href="${pageContext.request.contextPath}/employees/new" class="btn btn-primary">Add Employee</a>
-            </div>
         </div>
         
         <div class="stats-grid">

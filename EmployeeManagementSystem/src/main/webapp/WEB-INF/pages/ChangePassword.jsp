@@ -12,7 +12,7 @@
     <main class="change-password-container">
         <h1 class="change-password-title">Change Password</h1>
 
-        <form class="password-form" action="${pageContext.request.contextPath}/change-password" method="post">
+        <form class="password-form" action="${pageContext.request.contextPath}/changepassword" method="post">
             <div class="password-form-group">
                 <label for="currentPassword">Current Password:</label>
                 <input type="password" id="currentPassword" name="currentPassword" required>

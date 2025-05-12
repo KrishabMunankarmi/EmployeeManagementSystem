@@ -97,40 +97,34 @@
     color: #155724;
 }
 
-.action-buttons {
-    display: flex;
-    gap: 0.5rem;
-}
 
-.action-buttons button {
-    width: 30px;
-    height: 30px;
+.delete-btn {
+    padding: 0.8rem 1.5rem;
+    background: #4A90E2;
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
-.view-btn {
-    background: #f8f9fa;
-    color: #4A90E2;
-}
-
-.edit-btn {
-    background: #fff3cd;
-    color: #856404;
+.delete-btn:hover {
+    background: #357ABD;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .delete-btn {
-    background: #f8d7da;
-    color: #721c24;
+    background: #d9534f;
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
+.delete-btn:hover {
+    background: #c9302c;
+}
+
+.employees-table td:last-child {
+    text-align: center;
 }
 
 .page-btn {

@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Employees - Employee Management</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/Employees.css">
+    <meta charset="UTF-8">
+    <title>Employees - Employee Management</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Employees.css">
 </head>
 <body>
-<jsp:include page="Header.jsp" />
+<jsp:include page="AdminHeader.jsp" />
 
 <main class="employees-container">
     <div class="employees-header">
@@ -17,8 +17,9 @@
         <div class="search-add">
             <div class="search-box">
                 <input type="text" placeholder="Search employees...">
-                <button></button>
+                <button><i class="search"></i></button>
             </div>
+            <button class="add-employee">Add Employee</button>
         </div>
     </div>
 
@@ -27,40 +28,34 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Contact</th>
                 <th>Department</th>
                 <th>Position</th>
                 <th>Contract</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <%
-            List<EmployeeSystemModel> employees = (List<EmployeeSystemModel>) request.getAttribute("employees");
-            if (employees != null && !employees.isEmpty()) {
-                for (EmployeeSystemModel emp : employees) {
+                List<EmployeeSystemModel> employees = (List<EmployeeSystemModel>) request.getAttribute("employees");
+                if (employees != null) {
+                    for (EmployeeSystemModel emp : employees) {
             %>
             <tr>
                 <td>EMP-<%= emp.getEmpid() %></td>
-                <td>
-                    <div class="employee-info">
-                        <span><%= emp.getName() %></span>
-                    </div>
-                </td>
-                <td><%= emp.getContact() %></td>
+                <td><div class="employee-info"><span><%= emp.getName() %></span></div></td>
                 <td><%= emp.getDepartment() %></td>
                 <td><%= emp.getPosition() %></td>
                 <td><%= emp.getConperiod() %></td>
-                
+                <td>
+                    <form method="post" action="${pageContext.request.contextPath}/adminemployee" onsubmit="return confirm('Are you sure you want to delete this employee?');">
+                        <input type="hidden" name="empid" value="<%= emp.getEmpid() %>">
+                        <button class="delete-btn" type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             <%
+                    }
                 }
-            } else {
-            %>
-            <tr>
-                <td colspan="7" style="text-align: center;">No employees found</td>
-            </tr>
-            <%
-            }
             %>
         </tbody>
     </table>

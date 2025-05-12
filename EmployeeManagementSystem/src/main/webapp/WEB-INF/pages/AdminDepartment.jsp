@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Department.css">
 </head>
 <body>
-    <jsp:include page="Header.jsp" />
+    <jsp:include page="AdminHeader.jsp" />
     
     <main class="departments-container">
         <div class="departments-header">
@@ -74,6 +74,5 @@
         </div>
     </main>
 
-    <jsp:include page="Footer.jsp" />
 </body>
 </html>
