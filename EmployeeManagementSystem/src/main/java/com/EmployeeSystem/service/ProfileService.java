@@ -7,6 +7,7 @@ import java.sql.*;
 
 public class ProfileService {
 
+    // Fetch employee details by employee ID
     public EmployeeSystemModel getEmployeeById(int empId) {
         String sql = "SELECT FullName, Age, ContactNo FROM employee WHERE EmpID = ?";
         EmployeeSystemModel emp = null;
@@ -15,6 +16,8 @@ public class ProfileService {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, empId);
+
+            // Execute query and process result
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -31,6 +34,7 @@ public class ProfileService {
         return emp;
     }
 
+    // Update employee profile data in the database
     public boolean updateEmployeeProfile(int empId, String fullName, int age, String contact) {
         String sql = "UPDATE employee SET FullName = ?, Age = ?, ContactNo = ? WHERE EmpID = ?";
         boolean updated = false;
@@ -38,11 +42,13 @@ public class ProfileService {
         try (Connection conn = DbConfig.getDbConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            // Set parameters for update statement
             stmt.setString(1, fullName);
             stmt.setInt(2, age);
             stmt.setString(3, contact);
             stmt.setInt(4, empId);
 
+            // Execute update and check if rows affected
             updated = stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {

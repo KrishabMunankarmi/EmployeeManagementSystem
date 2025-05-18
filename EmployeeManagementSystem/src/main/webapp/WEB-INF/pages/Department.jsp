@@ -1,79 +1,60 @@
+<%-- Department JSP --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.EmployeeSystem.model.DepartmentModel" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Departments - Employee Management</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Department.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminDepartment.css">
 </head>
 <body>
-    <jsp:include page="Header.jsp" />
-    
-    <main class="departments-container">
-        <div class="departments-header">
-            <h1>Departments</h1>
-        </div>
-        
-        <div class="departments-grid">
-            <div class="department-card">
-                <div class="card-header">
-                    <h2>Information Technology</h2>
-                    <span class="employee-count">24 Employees</span>
-                </div>
-                <div class="card-body">
-                    <p>Responsible for all technical infrastructure and software development</p>
-                    <div class="card-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i> View</button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="department-card">
-                <div class="card-header">
-                    <h2>Human Resources</h2>
-                    <span class="employee-count">12 Employees</span>
-                </div>
-                <div class="card-body">
-                    <p>Handles recruitment, employee relations, and benefits administration</p>
-                    <div class="card-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i> View</button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
-                    </div>
-                </div>
-            </div>
-            
-             <div class="department-card">
-                <div class="card-header">
-                    <h2>Development</h2>
-                    <span class="employee-count">6 Employees</span>
-                </div>
-                <div class="card-body">
-                    <p>Handles development, and software designing</p>
-                    <div class="card-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i> View</button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="department-card">
-                <div class="card-header">
-                    <h2>Testing</h2>
-                    <span class="employee-count">8 Employees</span>
-                </div>
-                <div class="card-body">
-                    <p>Software Testing and software analysis</p>
-                    <div class="card-actions">
-                        <button class="action-btn view"><i class="fas fa-eye"></i> View</button>
-                        <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
-                    </div>
-                </div>
-            </div>
+<jsp:include page="Header.jsp" />
 
+<main class="departments-container">
+    <div class="departments-header">
+        <h1>Departments</h1>
+        <div class="search-add">
+            <form method="get" action="department" class="search-box">
+                <input type="text" name="search" placeholder="Search departments..." value="${param.search}">
+                <button type="submit">Search</button>
+            </form>
         </div>
-    </main>
+    </div>
 
-    <jsp:include page="Footer.jsp" />
+    <table class="departments-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Department Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                List<DepartmentModel> departments = (List<DepartmentModel>) request.getAttribute("departments");
+                if (departments != null && !departments.isEmpty()) {
+                    for (DepartmentModel dept : departments) {
+            %>
+            <tr>
+                <td>DEPT-<%= dept.getDepartmentID() %></td>
+                <td><%= dept.getDepartmentName() %></td>
+            </tr>
+            <%
+                    }
+                } else {
+            %>
+            <tr>
+                <td colspan="2" style="text-align: center;">No departments found.</td>
+            </tr>
+            <%
+                }
+            %>
+        </tbody>
+    </table>
+</main>
+
+<jsp:include page="Footer.jsp" />
 </body>
 </html>

@@ -1,3 +1,5 @@
+<%-- Employees JSP --%>
+
 <%@ page import="java.util.List" %>
 <%@ page import="com.EmployeeSystem.model.EmployeeSystemModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,11 +17,11 @@
     <div class="employees-header">
         <h1>Employee Directory</h1>
         <div class="search-add">
-            <div class="search-box">
-                <input type="text" placeholder="Search employees...">
-                <button></button>
-            </div>
-        </div>
+		    <form method="get" action="employees" class="search-box">
+		        <input type="text" name="search" placeholder="Search employees..." value="${param.search}">
+		        <button type="submit">Search</button>
+		    </form>
+		</div>
     </div>
 
     <table class="employees-table">
@@ -30,7 +32,7 @@
                 <th>Contact</th>
                 <th>Department</th>
                 <th>Position</th>
-                <th>Contract</th>
+                <th class="actions-column">Contract</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +52,6 @@
                 <td><%= emp.getDepartment() %></td>
                 <td><%= emp.getPosition() %></td>
                 <td><%= emp.getConperiod() %></td>
-                
             </tr>
             <%
                 }

@@ -1,0 +1,35 @@
+/* Add Department CSS */
+
+@charset "UTF-8";
+
+.department-form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.department-form h1 {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.form-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-btn, .cancel-btn {
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+}

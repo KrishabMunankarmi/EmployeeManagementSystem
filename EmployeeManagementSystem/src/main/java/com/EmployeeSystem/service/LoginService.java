@@ -13,6 +13,7 @@ public class LoginService {
     private Connection dbConn;
     private boolean isConnectionError = false;
 
+    // Initialize DB connection when service is created
     public LoginService() {
         try {
             dbConn = DbConfig.getDbConnection();
@@ -22,11 +23,11 @@ public class LoginService {
         }
     }
 
-
+    // Check login credentials against DB
     public Boolean loginUser(EmployeeSystemModel employee) {
         if (isConnectionError) {
             System.out.println("Connection Error!");
-            return null;
+            return null; // Cannot proceed due to DB connection issues
         }
 
         String query = "SELECT empid, name, password FROM employee WHERE name = ?";
@@ -36,6 +37,7 @@ public class LoginService {
 
             if (result.next()) {
                 String dbPassword = result.getString("password");
+                // Simple password check (plaintext comparison)
                 return dbPassword.equals(employee.getPassword());
             }
         } catch (SQLException e) {
@@ -43,6 +45,6 @@ public class LoginService {
             return null;
         }
 
-        return false;
+        return false; // No matching username found
     }
 }

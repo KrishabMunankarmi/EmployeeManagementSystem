@@ -18,28 +18,33 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Check login session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("empid") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
+        // Show change password form
         request.getRequestDispatcher("/WEB-INF/pages/ChangePassword.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Validate session
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("empid") == null) {
             response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
+        // Get form data
         int empId = (Integer) session.getAttribute("empid");
         String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
 
+        // Check if new passwords match
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "New passwords do not match");
             request.getRequestDispatcher("/WEB-INF/pages/ChangePassword.jsp").forward(request, response);
@@ -47,6 +52,7 @@ public class ChangePasswordController extends HttpServlet {
         }
 
         try (Connection conn = DbConfig.getDbConnection()) {
+            // Get stored password
             String sql = "SELECT Password FROM employee WHERE EmpID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, empId);
@@ -54,6 +60,8 @@ public class ChangePasswordController extends HttpServlet {
                 
                 if (rs.next()) {
                     String storedHash = rs.getString("Password");
+
+                    // Verify current password
                     if (PasswordUtil.verifyPassword(currentPassword, storedHash)) {
                         String newHash = PasswordUtil.hashPassword(newPassword);
                         updatePassword(conn, empId, newHash);
@@ -66,10 +74,12 @@ public class ChangePasswordController extends HttpServlet {
         } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             request.setAttribute("error", "Error changing password");
         }
-        
+
+        // Show result
         request.getRequestDispatcher("/WEB-INF/pages/ChangePassword.jsp").forward(request, response);
     }
 
+    // Update password in database
     private void updatePassword(Connection conn, int empId, String newHash) throws SQLException {
         String sql = "UPDATE employee SET Password = ? WHERE EmpID = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

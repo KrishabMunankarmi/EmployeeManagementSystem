@@ -4,37 +4,37 @@ import java.io.Serializable;
 
 public class EmployeeSystemModel implements Serializable {
     private static final long serialVersionUID = 1L;
-    
-    private int empid;
-    private String name;
-    private String password;
-    private int age;
-    private String contact;
-    private int posid;
-    private String position;
-    private int deptid;
-    private String department;
-    private int conid;
-    private String conperiod;
+
+    private int empid;          // Employee ID (primary key)
+    private String name;        // Employee full name
+    private String password;    // Hashed password
+    private int age;            // Employee age
+    private String contact;     // Contact number
+    private int posid;          // Position ID (foreign key)
+    private int deptid;         // Department ID (foreign key)
+    private int conid;          // Contract ID (foreign key)
+    private String conperiod;   // Contract period description
+    private String imagePath;   // Profile image path (relative)
+    private String department;  // Department name (for display)
+    private String position;    // Position title (for display)
 
     public EmployeeSystemModel() {}
 
-	public EmployeeSystemModel(int empid, String name, String password, int age, String contact, int posid,
-			String position, int deptid, String department, int conid, String conperiod) {
-		super();
-		this.empid = empid;
-		this.name = name;
-		this.password = password;
-		this.age = age;
-		this.contact = contact;
-		this.posid = posid;
-		this.position = position;
-		this.deptid = deptid;
-		this.department = department;
-		this.conid = conid;
-		this.conperiod = conperiod;
-	}
+    public EmployeeSystemModel(int empid, String name, String password, int age, String contact, int posid,
+                               int deptid, int conid, String conperiod) {
+        this.empid = empid;
+        this.name = name;
+        this.password = password;
+        this.age = age;
+        this.contact = contact;
+        this.posid = posid;
+        this.deptid = deptid;
+        this.conid = conid;
+        this.conperiod = conperiod;
+    }
 
+    // Getters and setters for all fields below
+    
 	public int getEmpid() {
 		return empid;
 	}
@@ -71,8 +71,8 @@ public class EmployeeSystemModel implements Serializable {
 		return contact;
 	}
 
-	public void setContact(String string) {
-		this.contact = string;
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	public int getPosid() {
@@ -83,28 +83,12 @@ public class EmployeeSystemModel implements Serializable {
 		this.posid = posid;
 	}
 
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
 	public int getDeptid() {
 		return deptid;
 	}
 
 	public void setDeptid(int deptid) {
 		this.deptid = deptid;
-	}
-
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
 	}
 
 	public int getConid() {
@@ -123,7 +107,32 @@ public class EmployeeSystemModel implements Serializable {
 		this.conperiod = conperiod;
 	}
 
-    
-}
+	public String getImagePath() {
+		return imagePath;
+	}
 
-    
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+}

@@ -1,3 +1,5 @@
+<%-- Register JSP --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -63,15 +65,15 @@
                     </div>
                 <% } %>
                 
-               <form class="register-form" action="${pageContext.request.contextPath}/register" method="post" onsubmit="return validateForm()">
+               <form class="register-form" action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="empid">Employee ID</label>
-                            <input type="text" id="empid" name="empid" required>
-                        </div>
                         <div class="form-group">
                             <label for="name">Full Name</label>
                             <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Profile Image</label>
+                            <input type="file" id="image" name="image" accept="image/*" required>
                         </div>
                     </div>
                     
@@ -93,26 +95,14 @@
                         </div>
                         <div class="form-group">
                             <label for="contact">Contact No.</label>
-                            <input type="tel" id="contact" name="contact" required pattern="[0-9]{10,15}" 
-                                   title="10-15 digit phone number">
+                            <input type="tel" id="contact" name="contact" required pattern="[0-9]{10,15}" title="10-15 digit phone number">
                         </div>
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="posid">Position ID</label>
-                            <input type="number" id="posid" name="posid" required>
-                        </div>
                         <div class="form-group">
                             <label for="position">Position Title</label>
                             <input type="text" id="position" name="position" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="deptid">Department ID</label>
-                            <input type="number" id="deptid" name="deptid" required>
                         </div>
                         <div class="form-group">
                             <label for="department">Department Name</label>
@@ -121,10 +111,6 @@
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="conid">Contract ID</label>
-                            <input type="number" id="conid" name="conid" required>
-                        </div>
                         <div class="form-group">
                             <label for="conperiod">Contract Period</label>
                             <input type="text" id="conperiod" name="conperiod" required>

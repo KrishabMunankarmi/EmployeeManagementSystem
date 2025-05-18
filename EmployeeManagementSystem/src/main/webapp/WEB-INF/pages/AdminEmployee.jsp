@@ -1,3 +1,5 @@
+<%-- Admin Employee JSP --%>
+
 <%@ page import="java.util.List" %>
 <%@ page import="com.EmployeeSystem.model.EmployeeSystemModel" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -6,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Employees - Employee Management</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Employees.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AdminEmployee.css">
 </head>
 <body>
 <jsp:include page="AdminHeader.jsp" />
@@ -15,11 +17,10 @@
     <div class="employees-header">
         <h1>Employee Directory</h1>
         <div class="search-add">
-            <div class="search-box">
-                <input type="text" placeholder="Search employees...">
-                <button><i class="search"></i></button>
-            </div>
-            <button class="add-employee">Add Employee</button>
+            <form method="get" action="adminemployee" class="search-box">
+                <input type="text" name="search" placeholder="Search employees..." value="${param.search}">
+                <button type="submit">Search</button>
+            </form>
         </div>
     </div>
 
@@ -31,13 +32,13 @@
                 <th>Department</th>
                 <th>Position</th>
                 <th>Contract</th>
-                <th>Actions</th>
+                <th class="actions-column">Actions</th>
             </tr>
         </thead>
         <tbody>
             <%
                 List<EmployeeSystemModel> employees = (List<EmployeeSystemModel>) request.getAttribute("employees");
-                if (employees != null) {
+                if (employees != null && !employees.isEmpty()) {
                     for (EmployeeSystemModel emp : employees) {
             %>
             <tr>
@@ -55,6 +56,12 @@
             </tr>
             <%
                     }
+                } else {
+            %>
+            <tr>
+                <td colspan="6" style="text-align: center;">No employees found.</td>
+            </tr>
+            <%
                 }
             %>
         </tbody>

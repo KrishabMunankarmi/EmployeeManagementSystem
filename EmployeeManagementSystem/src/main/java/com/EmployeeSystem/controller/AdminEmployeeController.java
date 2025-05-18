@@ -19,21 +19,32 @@ public class AdminEmployeeController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Fetching employee list
         List<EmployeeSystemModel> employees = new ArrayList<>();
+        String search = request.getParameter("search");
 
         try (Connection conn = DbConfig.getDbConnection()) {
-            String sql = "SELECT " +
-                    "e.EmpID, e.FullName, e.ContactNo, " +
-                    "d.DepartmentName, p.PositionTitle, c.ContractPeriod " +
-                    "FROM employee e " +
-                    "LEFT JOIN employeedepartment ed ON e.EmpID = ed.EmpID " +
-                    "LEFT JOIN department d ON ed.DepartmentID = d.DepartmentID " +
-                    "LEFT JOIN employeedepartmentposition edp ON e.EmpID = edp.EmpID " +
-                    "LEFT JOIN position p ON edp.PositionID = p.PositionID " +
-                    "LEFT JOIN employeecontract ec ON e.EmpID = ec.EmpID " +
-                    "LEFT JOIN contract c ON ec.ContractID = c.ContractID";
+            // Building SQL query with optional search
+            String sql = "SELECT e.EmpID, e.FullName, e.ContactNo, " +
+                         "d.DepartmentName, p.PositionTitle, c.ContractPeriod " +
+                         "FROM employee e " +
+                         "LEFT JOIN employeedepartment ed ON e.EmpID = ed.EmpID " +
+                         "LEFT JOIN department d ON ed.DepartmentID = d.DepartmentID " +
+                         "LEFT JOIN employeedepartmentposition edp ON e.EmpID = edp.EmpID " +
+                         "LEFT JOIN position p ON edp.PositionID = p.PositionID " +
+                         "LEFT JOIN employeecontract ec ON e.EmpID = ec.EmpID " +
+                         "LEFT JOIN contract c ON ec.ContractID = c.ContractID";
+
+            if (search != null && !search.trim().isEmpty()) {
+                sql += " WHERE e.FullName LIKE ?";
+            }
 
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                if (search != null && !search.trim().isEmpty()) {
+                    stmt.setString(1, "%" + search.trim() + "%");
+                }
+
+                // Mapping result to model
                 ResultSet rs = stmt.executeQuery();
                 while (rs.next()) {
                     EmployeeSystemModel emp = new EmployeeSystemModel();
@@ -50,11 +61,13 @@ public class AdminEmployeeController extends HttpServlet {
             e.printStackTrace();
         }
 
+        // Setting attribute and forwarding to JSP
         request.setAttribute("employees", employees);
         request.getRequestDispatcher("/WEB-INF/pages/AdminEmployee.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Deleting employee
         String deleteId = request.getParameter("empid");
 
         if (deleteId != null && !deleteId.isEmpty()) {
@@ -84,9 +97,10 @@ public class AdminEmployeeController extends HttpServlet {
                         stmt4.executeUpdate();
                     }
 
+                    // Committing deletion
                     conn.commit();
                 } catch (Exception e) {
-                    conn.rollback();
+                    conn.rollback(); // Rolling back on error
                     e.printStackTrace();
                 }
             } catch (Exception e) {
@@ -94,6 +108,7 @@ public class AdminEmployeeController extends HttpServlet {
             }
         }
 
+        // Redirecting to employee list
         response.sendRedirect(request.getContextPath() + "/adminemployee");
     }
 }
