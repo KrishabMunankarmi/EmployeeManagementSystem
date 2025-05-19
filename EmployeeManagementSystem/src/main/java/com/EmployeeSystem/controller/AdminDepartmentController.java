@@ -18,6 +18,7 @@ public class AdminDepartmentController extends HttpServlet {
 
     private AdminDepartmentService service = new AdminDepartmentService();
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         if (action == null) action = "list";
@@ -34,14 +35,8 @@ public class AdminDepartmentController extends HttpServlet {
                 request.setAttribute("department", dept);
                 request.getRequestDispatcher("/WEB-INF/pages/AddDepartment.jsp").forward(request, response);
                 break;
-            case "delete":
-                // Deleting department
-                int deleteId = Integer.parseInt(request.getParameter("id"));
-                service.deleteDepartment(deleteId);
-                response.sendRedirect("admindepartment");
-                break;
             default:
-                // Listing departments
+                // Listing departments (with optional search)
                 String searchTerm = request.getParameter("search");
                 List<DepartmentModel> departments;
 
@@ -57,7 +52,23 @@ public class AdminDepartmentController extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("delete".equalsIgnoreCase(action)) {
+            // Handle delete request
+            try {
+                int deleteId = Integer.parseInt(request.getParameter("id"));
+                service.deleteDepartment(deleteId);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            response.sendRedirect("admindepartment");
+            return;
+        }
+
+        // Handle add or update department
         String deptName = request.getParameter("departmentName");
         String idStr = request.getParameter("departmentID");
 
@@ -69,6 +80,7 @@ public class AdminDepartmentController extends HttpServlet {
             int id = Integer.parseInt(idStr);
             service.updateDepartment(id, deptName);
         }
+
         response.sendRedirect("admindepartment");
     }
 }
